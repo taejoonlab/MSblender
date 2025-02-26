@@ -2,7 +2,10 @@
 import sys
 import os
 
+decoy_prefix = "DECOY_"
+
 usage_mesg = 'Usage: fasta-reverse.py <fasta file>'
+
 if len(sys.argv) != 2:
     sys.stderr.write('Error! Invalide argument.\n%s\n' % (usage_mesg))
     sys.exit(1)
@@ -28,9 +31,9 @@ f_target = open("%s.target" % filename_fasta, 'w')
 f_reverse = open("%s.reverse" % filename_fasta, 'w')
 f_combined = open("%s.combined" % filename_fasta, 'w')
 for h in seq.keys():
-    f_reverse.write(">rv_%s\n%s\n" % (h, seq[h][::-1]))
+    f_reverse.write(">%s%s\n%s\n" % (decoy_prefix, h, seq[h][::-1]))
     f_target.write(">%s\n%s\n " % (h, seq[h]))
-    f_combined.write(">rv_%s\n%s\n" % (h, seq[h][::-1]))
+    f_combined.write(">%s%s\n%s\n" % (decoy_prefix, h, seq[h][::-1]))
     f_combined.write(">%s\n%s\n " % (h, seq[h]))
 f_reverse.close()
 f_target.close()
